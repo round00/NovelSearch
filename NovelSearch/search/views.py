@@ -29,6 +29,14 @@ def get_topnsearch():
     return topn_search
 
 
+def get_source_name(source):
+    if source is None:return ""
+    if source == "qidian":return "起点中文网"
+    elif source == "zongheng": return "纵横中文网"
+    elif source == "jinjiang": return "晋江文学城"
+    else: return "其他"
+
+
 class IndexView(View):
     #首页
     def get(self, request):
@@ -119,9 +127,10 @@ class SearchView(View):
             else:
                 hit_dict["introduction"] = hit["_source"]["introduction"][:500]
 
-            hit_dict["source"] = hit["_source"]["source"]
-            # hit_dict["create_date"] = hit["_source"]["create_date"]
+            hit_dict["source"] = get_source_name(hit["_source"]["source"])
+            hit_dict["tags"] = hit["_source"]["tags"]
             hit_dict["url"] = hit["_source"]["url"]
+            hit_dict["author"] = hit["_source"]["author"]
             hit_dict["score"] = hit["_score"]
 
             hit_list.append(hit_dict)

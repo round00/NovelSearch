@@ -23,7 +23,9 @@ class NovelType(DocType):
     name = Text(analyzer="ik_max_word")
     author = Text(analyzer="ik_max_word")
     introduction = Text(analyzer="ik_max_word")
+    tags = Text(analyzer="ik_max_word")
     url = Keyword()
+    source = Keyword()
 
     class Meta:
         index = "novel_search"

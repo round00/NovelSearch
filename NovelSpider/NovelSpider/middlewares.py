@@ -15,7 +15,7 @@ class RandomUserAgentMiddleware(UserAgentMiddleware):
     def process_request(self, request, spider):
         user_agent = random.choice(USER_AGENT_LIST)
         if user_agent:
-            request.headers.setdefault('User-Agent', user_agent)
+            request.headers['User-Agent'] = user_agent
 
 class NovelspiderSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,

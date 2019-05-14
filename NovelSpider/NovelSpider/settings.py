@@ -13,7 +13,7 @@ BOT_NAME = 'NovelSpider'
 
 SPIDER_MODULES = ['NovelSpider.spiders']
 NEWSPIDER_MODULE = 'NovelSpider.spiders'
-
+# USER_AGENT ="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT_LIST = [
@@ -74,6 +74,7 @@ COOKIES_ENABLED = False
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    'NovelSpider.middlewares.NovelspiderDownloaderMiddleware': 543,
+   'NovelSpider.middlewares.RandomUserAgentMiddleware': 543,
 }
 
 # Enable or disable extensions

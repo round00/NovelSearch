@@ -12,14 +12,6 @@ class QidianSpider(scrapy.Spider):
     start_urls = ['https://www.qidian.com/all']
 
     def parse(self, response):
-        if response.status >= 300:
-            print("failed request info")
-            print(response.status)
-            print(response.url)
-            print(response.headers)
-            print(response.request.headers)
-            return
-
         item_nodes = response.css(".all-book-list .book-img-text .all-img-list li")
         for item_node in item_nodes:
             item_url = item_node.css(".book-mid-info h4 a::attr(href)").extract_first("")
@@ -44,26 +36,43 @@ class QidianSpider(scrapy.Spider):
         else:
             next_page = next_page[-1]
             next_url = next_page.css("li a::attr(href)").extract_first("")
-
+        # time.sleep(1)
+        print("next_url=" + next_url)
         if next_url:
             next_url = parse.urljoin(response.url, next_url)
-            yield Request(url=next_url, callback=self.parse)
+            yield Request(url=next_url, callback=self.parse, errback=self.request_errback)
 
     def parse_detail(self, response):
         if response.status == 404:return
         url = response.url
         name = response.css(".book-information .book-info h1 em::text").extract_first("")
         author = response.css(".book-information .book-info h1 span a::text").extract_first("")
-        intros = response.css(".book-content-wrap .book-info-detail .book-intro p::text").extract_first("")
+        # 类别标签
+        labels = response.css(".book-information .book-info .tag a::text").extract()
+        tags = ""
+        for label in labels:
+            if tags == "":tags = tags + label
+            else: tags = tags + "," + label
+        # 简介
+        intros = response.css(".book-content-wrap .book-info-detail .book-intro p::text").extract()
         introduction = ""
         for intro in intros:
             introduction += intro.strip()
-
 
         item = NovelspiderItem()
         item["name"] = name
         item["author"] = author
         item["introduction"] = introduction
+        item["tags"] = tags
         item["url"] = url
         item["source"] = "qidian"
         yield item
+
+    def request_errback(self, failure):
+        request = failure.request
+        response = failure.value.response
+        print(request.headers)
+        # print(response.body)
+        print(response.css("*"))
+
+

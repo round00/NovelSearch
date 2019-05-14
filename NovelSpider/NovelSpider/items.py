@@ -11,6 +11,8 @@ from NovelSpider.es_types import NovelType
 from elasticsearch_dsl.connections import connections
 es = connections.create_connection(hosts=["localhost"])
 redis_cli = redis.StrictRedis()
+
+
 def gen_suggests(index, info_tuple):
     #根据字符串生成搜索建议数组
     used_words = set()
@@ -29,10 +31,12 @@ def gen_suggests(index, info_tuple):
 
     return suggests
 
+
 class NovelspiderItem(scrapy.Item):
     name = scrapy.Field()
     author = scrapy.Field()
     introduction = scrapy.Field()
+    tags = scrapy.Field()
     url = scrapy.Field()
     source = scrapy.Field()
 
@@ -41,8 +45,10 @@ class NovelspiderItem(scrapy.Item):
         novel.name = self['name']
         novel.author = self['author']
         novel.introduction = self['introduction']
+        novel.tags = self["tags"]
         novel.url = self["url"]
-        novel.suggest = gen_suggests(NovelType.Index.name, ((novel.name, 10), (novel.introduction, 7)))
+        novel.source = self["source"]
+        novel.suggest = gen_suggests(NovelType.Index.name, ((novel.name, 10), (novel.introduction, 7), (novel.author, 7)))
         redis_cli.incr(self["source"] + "_count")
         novel.save()
 
