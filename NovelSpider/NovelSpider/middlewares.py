@@ -6,7 +6,16 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+import random
+from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
+from NovelSpider.settings import USER_AGENT_LIST
 
+
+class RandomUserAgentMiddleware(UserAgentMiddleware):
+    def process_request(self, request, spider):
+        user_agent = random.choice(USER_AGENT_LIST)
+        if user_agent:
+            request.headers.setdefault('User-Agent', user_agent)
 
 class NovelspiderSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
