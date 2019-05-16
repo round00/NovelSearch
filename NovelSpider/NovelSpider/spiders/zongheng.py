@@ -11,13 +11,13 @@ class ZonghengSpider(scrapy.Spider):
     start_urls = ['http://book.zongheng.com/store.html']
 
     def parse(self, response):
-        item_nodes = response.css(".store_list_wrap .store_collist .bookbox fl")
+        item_nodes = response.css(".store_list_wrap .store_collist .bookbox.fl")
         for item_node in item_nodes:
             item_url = item_node.css(".bookinfo .bookname a::attr(href)").extract_first("")
             item_url = parse.urljoin(response.url, item_url)
             yield Request(url=item_url, callback=self.parse_detail)
 
-        item_nodes = response.css(".store_list_wrap .store_collist .bookbox fr")
+        item_nodes = response.css(".store_list_wrap .store_collist .bookbox.fr")
         for item_node in item_nodes:
             item_url = item_node.css(".bookinfo .bookname a::attr(href)").extract_first("")
             item_url = parse.urljoin(response.url, item_url)
