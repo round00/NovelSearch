@@ -25,7 +25,7 @@ class ZonghengSpider(scrapy.Spider):
 
         #获取下页url
         next_url = ""
-        next_page = response.css(".pagebox .pagenumber.pagebar a[title]::attr(page)")
+        next_page = response.css(".pagebox .pagenumber.pagebar a[title=下一页]::attr(page)")
         if len(next_page) != 0:
             next_url = 'http://book.zongheng.com/store/c0/c0/b0/u0/p'+next_page+'/v9/s9/t0/u0/i1/ALL.html'
         # time.sleep(1)
@@ -37,7 +37,7 @@ class ZonghengSpider(scrapy.Spider):
         if response.status == 404:return
         url = response.url
         name = response.css(".book-detail.clearfix .book-info .book-name::text").extract_first("")
-        author = response.css(".book-top.clearfix .book-side.fr .book-author.eye-pretector-precessed .au-head em::text").extract_first("")
+        author = response.css(".book-side.fr .book-author.eye-protector-processed .au-name a::text").extract_first("")
         # 类别标签
         labels = response.css(".book-detail.clearfix .book-info .book-label span a::text").extract()
         tags = ""
