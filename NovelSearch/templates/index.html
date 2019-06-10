@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>lcv-search 搜索引擎</title>
+<title>搜索引擎</title>
 <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
 <link href="{% static 'css/index.css' %}" rel="stylesheet" type="text/css" />
 </head>
@@ -18,20 +18,18 @@
             </h1>
             <div class="nav ue-clear">
             	<ul class="searchList">
-                    <li class="searchItem current" data-type="novel">小说</li>
-                    <li class="searchItem" data-type="question">问答</li>
-                    <li class="searchItem" data-type="job">职位</li>
+{#                    <li class="searchItem current" data-type="novel">小说</li>#}
                 </ul>
             </div>
             <div class="inputArea">
             	<input type="text" class="searchInput" />
                 <input type="button" class="searchButton" onclick="add_search()" />
                 <ul class="dataList">
-                	<li>如何学好设计</li>
+                	{#<li>如何学好设计</li>
                     <li>界面设计</li>
                     <li>UI设计培训要多少钱</li>
                     <li>设计师学习</li>
-                    <li>哪里有好的网站</li>
+                    <li>哪里有好的网站</li>#}
                 </ul>
             </div>
 
@@ -43,7 +41,7 @@
                     {% endfor %}
                 </p>
                 <p class="history mysearch">
-                	<label>我的搜索：</label>
+{#                	<label>我的搜索：</label>#}
                     <span class="all-search">
                         <a href="javascript:;">专注界面设计网站</a>
                         <a href="javascript:;">用户体验</a>
@@ -58,7 +56,7 @@
 
     <div class="foot">
     	<div class="wrap">
-            <div class="copyright">Copyright &copy;uimaker.com 版权所有  E-mail:admin@uimaker.com</div>
+{#            <div class="copyright">Copyright  版权所有  306-三人行</div>#}
         </div>
     </div>
 </div>

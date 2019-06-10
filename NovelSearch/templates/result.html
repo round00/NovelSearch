@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>python-lcv-search搜索引擎</title>
+<title>结果显示</title>
 <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
 <link href="{% static 'css/result.css' %}" rel="stylesheet" type="text/css" />
 </head>
@@ -21,37 +21,38 @@
     <div class="nav">
     	<ul class="searchList">
             <li class="searchItem current" data-type="article">文章</li>
-            <li class="searchItem" data-type="question">问答</li>
-            <li class="searchItem" data-type="job">职位</li>
+            {% comment %}<li class="searchItem" data-type="question">问答</li>
+            <li class="searchItem" data-type="job">职位</li>{% endcomment %}
         </ul>
     </div>
 	<div id="bd" class="ue-clear">
         <div id="main">
         	<div class="sideBar">
-            	
-                <div class="subfield">网站</div>
-                <ul class="subfieldContext">
-                	<li>
-                    	<span class="name">起点中文网</span>
-						<span class="unit">({{ qidian_count }})</span>
-                    </li>
-                    <li>
-                    	<span class="name">纵横中文网</span>
-						<span class="unit">({{ zongheng_count }})</span>
-                    </li>
-                    <li>
-                    	<span class="name">晋江文学城</span>
-						<span class="unit">({{ jinjiang_count }})</span>
-                    </li>
-                    <li class="more">
-                    	<a href="javascript:;">
-                        	<span class="text">更多</span>
-                        	<i class="moreIcon"></i>
-                        </a>
-                    </li>
-                </ul>
-                
-                            
+
+
+
+            	<div class="hotSearch">
+                	<h5>热门搜索</h5>
+                    <ul class="historyList">
+                    {% for search_words in topn_search %}
+                        <li><a href="/search?q={{ search_words }}">{{ search_words }}</a></li>
+                    {% endfor %}
+{#                        {% for search_word in topn_search %}#}
+{#                            <li><a href="/search?q={{ search_word }}">{{ search_word }}</a></li>#}
+{#                        {% endfor %}#}
+                    </ul>
+                </div>
+{#                <div class="mySearch">#}
+{#                	<h6>我的搜索</h6>#}
+{#                    <ul class="historyList">#}
+{#                        {% for search_word in topn_search %}#}
+{#                            <li><a href="/search?q={{ search_word }}">{{ search_word }}</a></li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                </div>#}
+
+
+
                 <div class="sideBarShowHide">
                 	<a href="javascript:;" class="icon"></a>
                 </div>
@@ -98,27 +99,12 @@
                 
                 
             </div>
-            <div class="historyArea">
-            	<div class="hotSearch">
-                	<h6>热门搜索</h6>
-                    <ul class="historyList">
-                        {% for search_word in topn_search %}
-                            <li><a href="/search?q={{ search_word }}">{{ search_word }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="mySearch">
-                	<h6>我的搜索</h6>
-                    <ul class="historyList">
 
-                    </ul>
-                </div>
-            </div>
         </div><!-- End of main -->
     </div><!--End of bd-->
 </div>
 
-<div id="foot">Copyright &copy;projectsedu.com 版权所有  E-mail:admin@projectsedu.com</div>
+{#<div id="foot">Copyright  版权所有  306-三人行</div>#}
 </body>
 <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
@@ -128,11 +114,11 @@
 
 	$('.searchList').on('click', '.searchItem', function(){
 		$('.searchList .searchItem').removeClass('current');
-		$(this).addClass('current');	
+		$(this).addClass('current');
 	});
-	
+
 	$.each($('.subfieldContext'), function(i, item){
-		$(this).find('li:gt(2)').hide().end().find('li:last').show();		
+		$(this).find('li:gt(2)').hide().end().find('li:last').show();
 	});
 
 	function removeByValue(arr, val) {
@@ -146,16 +132,16 @@
 	$('.subfieldContext .more').click(function(e){
 		var $more = $(this).parent('.subfieldContext').find('.more');
 		if($more.hasClass('show')){
-			
+
 			if($(this).hasClass('define')){
 				$(this).parent('.subfieldContext').find('.more').removeClass('show').find('.text').text('自定义');
 			}else{
-				$(this).parent('.subfieldContext').find('.more').removeClass('show').find('.text').text('更多');	
+				$(this).parent('.subfieldContext').find('.more').removeClass('show').find('.text').text('更多');
 			}
 			$(this).parent('.subfieldContext').find('li:gt(2)').hide().end().find('li:last').show();
 	    }else{
 			$(this).parent('.subfieldContext').find('.more').addClass('show').find('.text').text('收起');
-			$(this).parent('.subfieldContext').find('li:gt(2)').show();	
+			$(this).parent('.subfieldContext').find('li:gt(2)').show();
 		}
 		
 	});

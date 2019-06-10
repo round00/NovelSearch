@@ -24,10 +24,10 @@ html{*overflow:auto;}
 #main.sideBarHide{padding-left:10px;}
 /*侧边栏搜索条件*/
 .sideBar{position:relative;float:left;margin-left:-182px;width:182px;}
-.sideBar .subfieldContext{margin-bottom:20px;padding-left:25px;}
-.sideBar .subfieldContext li{margin-bottom:5px;cursor:pointer;}
-.sideBar .subfieldContext input[type=text]{width:75px;}
-.sideBar .unit{color:#787878;}
+.sideBar .hotSearch{margin-bottom:20px;padding-left:25px;}
+/*.sideBar .subfieldContext li{margin-bottom:5px;cursor:pointer;}*/
+/*.sideBar .subfieldContext input[type=text]{width:75px;}*/
+/*.sideBar .unit{color:#787878;}*/
 
 /*更多按钮*/
 .sideBar .more a:hover{text-decoration:none;}
